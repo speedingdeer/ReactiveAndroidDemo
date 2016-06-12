@@ -1,16 +1,16 @@
 package com.speedingdeer.reactiveandroiddemo;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.speedingdeer.reactiveandroiddemo.fragments.EventFragment;
@@ -18,7 +18,8 @@ import com.speedingdeer.reactiveandroiddemo.fragments.ListenerFragment;
 import com.speedingdeer.reactiveandroiddemo.fragments.ReactiveFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements ListenerFragment.OnListenerFragmentInteractionListener, // Listener Demo
+        NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,4 +79,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    // Listener DEMO
+
+    @Override
+    public void onFragmentInteraction() {
+
+    }
 }

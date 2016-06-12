@@ -1,18 +1,22 @@
 package com.speedingdeer.reactiveandroiddemo.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.speedingdeer.reactiveandroiddemo.R;
 
 public class ListenerFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    // classic listener
+    private OnListenerFragmentInteractionListener mListener;
+
+    private View mView;
+    private Button mButton;
 
     public ListenerFragment() { } // Required empty public constructor
 
@@ -29,21 +33,23 @@ public class ListenerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment, container, false);
+
+        mView = inflater.inflate(R.layout.fragment, container, false);
+        mButton = (Button) mView.findViewById(R.id.button);
+        return mView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed() {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction();
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnListenerFragmentInteractionListener) {
+            mListener = (OnListenerFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -56,8 +62,7 @@ public class ListenerFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnListenerFragmentInteractionListener {
+        void onFragmentInteraction();
     }
 }
