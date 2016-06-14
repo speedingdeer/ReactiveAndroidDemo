@@ -69,7 +69,7 @@ public class ListenerFragment extends Fragment {
         }
     }
 
-    public void onReceive(Intent intent) {
+    public void onBroadcastReceived(Intent intent) {
         mButton.setEnabled(ReactiveAndroidDemo.getInstance().isNetworkAvailable());
     }
 

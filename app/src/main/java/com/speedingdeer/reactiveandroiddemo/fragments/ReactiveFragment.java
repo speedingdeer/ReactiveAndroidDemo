@@ -11,6 +11,9 @@ import android.widget.Button;
 import com.speedingdeer.reactiveandroiddemo.R;
 import com.speedingdeer.reactiveandroiddemo.ReactiveAndroidDemo;
 
+import rx.Observable;
+import rx.functions.Action1;
+
 
 public class ReactiveFragment extends Fragment {
 
@@ -41,6 +44,14 @@ public class ReactiveFragment extends Fragment {
 
         // build ui
         mButton.setEnabled(ReactiveAndroidDemo.getInstance().isNetworkAvailable());
+
+        // subscribe rx
+        Observable.create(ReactiveAndroidDemo.getInstance().getNetworkStatusObservable()).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                mButton.setEnabled(aBoolean);
+            }
+        });
 
         return mView;
     }

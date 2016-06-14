@@ -18,13 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.speedingdeer.reactiveandroiddemo.events.ConnectionChangedEvent;
 import com.speedingdeer.reactiveandroiddemo.fragments.EventFragment;
 import com.speedingdeer.reactiveandroiddemo.fragments.ListenerFragment;
 import com.speedingdeer.reactiveandroiddemo.fragments.ReactiveFragment;
-import com.speedingdeer.reactiveandroiddemo.receivers.Receiver;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class MainActivity extends AppCompatActivity
         implements ListenerFragment.OnListenerFragmentInteractionListener, // Listener Demo
@@ -98,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             if(mNavigationView.getMenu().getItem(0).isChecked()) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 ListenerFragment fragment = (ListenerFragment) fragmentManager.findFragmentByTag(ListenerFragment.class.getCanonicalName());
-                fragment.onReceive(intent);
+                fragment.onBroadcastReceived(intent);
             }
         }
     };

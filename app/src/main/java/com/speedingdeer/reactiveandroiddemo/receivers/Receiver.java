@@ -1,6 +1,7 @@
 package com.speedingdeer.reactiveandroiddemo.receivers;
 
 import android.content.BroadcastReceiver;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -41,7 +42,9 @@ public class Receiver extends BroadcastReceiver {
 
 
             // reactive demo
-            // @TODO: implement network state observable
+            ReactiveAndroidDemo.getInstance().getNetworkStatusObservable().statusChanged();
+
+
         }
 
     }
