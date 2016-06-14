@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
+import com.speedingdeer.reactiveandroiddemo.events.ConnectionChangedEvent;
+
+import org.greenrobot.eventbus.EventBus;
+
 
 public class Receiver extends BroadcastReceiver {
 
@@ -17,8 +21,10 @@ public class Receiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-            Log.d(getClass().getSimpleName(), ConnectivityManager.CONNECTIVITY_ACTION);
-            // @TODO: implement me, talk to MainActivity and fragments!
+            // event demo
+            EventBus.getDefault().post(new ConnectionChangedEvent());
+            // reactive demo
+            // @TODO: implement network state observable
         }
 
     }

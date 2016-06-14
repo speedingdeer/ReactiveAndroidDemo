@@ -83,6 +83,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction() {
-
+        // show hide the progress bar
     }
 }

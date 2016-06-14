@@ -6,11 +6,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.speedingdeer.reactiveandroiddemo.R;
+import com.speedingdeer.reactiveandroiddemo.ReactiveAndroidDemo;
 
 
 public class ReactiveFragment extends Fragment {
+
+    // ui
+    private View mView;
+    private Button mButton;
 
     public ReactiveFragment() { } // Required empty public constructor
 
@@ -27,17 +33,16 @@ public class ReactiveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment, container, false);
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+        getActivity().setTitle(R.string.reactive);
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+        mView = inflater.inflate(R.layout.fragment, container, false);
+        mButton = (Button) mView.findViewById(R.id.button);
+
+        // build ui
+        mButton.setEnabled(ReactiveAndroidDemo.getInstance().isNetworkAvailable());
+
+        return mView;
     }
 
 }

@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.speedingdeer.reactiveandroiddemo.R;
+import com.speedingdeer.reactiveandroiddemo.ReactiveAndroidDemo;
 
 public class ListenerFragment extends Fragment {
 
     // classic listener
     private OnListenerFragmentInteractionListener mListener;
 
+    // ui
     private View mView;
     private Button mButton;
 
@@ -34,8 +36,14 @@ public class ListenerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        getActivity().setTitle(R.string.listener);
+
         mView = inflater.inflate(R.layout.fragment, container, false);
         mButton = (Button) mView.findViewById(R.id.button);
+
+        // build ui
+        mButton.setEnabled(ReactiveAndroidDemo.getInstance().isNetworkAvailable());
+
         return mView;
     }
 
