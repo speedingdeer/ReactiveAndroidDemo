@@ -1,5 +1,10 @@
 package com.speedingdeer.reactiveandroiddemo;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,14 +18,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.speedingdeer.reactiveandroiddemo.events.ConnectionChangedEvent;
 import com.speedingdeer.reactiveandroiddemo.fragments.EventFragment;
 import com.speedingdeer.reactiveandroiddemo.fragments.ListenerFragment;
 import com.speedingdeer.reactiveandroiddemo.fragments.ReactiveFragment;
+import com.speedingdeer.reactiveandroiddemo.receivers.Receiver;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class MainActivity extends AppCompatActivity
         implements ListenerFragment.OnListenerFragmentInteractionListener, // Listener Demo
         NavigationView.OnNavigationItemSelectedListener {
 
+    private NavigationView mNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +44,12 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         // build UI - select the first item
-        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        onNavigationItemSelected(mNavigationView.getMenu().getItem(0));
+
     }
 
     @Override
@@ -80,6 +91,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Listener DEMO
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(mNavigationView.getMenu().getItem(0).isChecked()) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                ListenerFragment fragment = (ListenerFragment) fragmentManager.findFragmentByTag(ListenerFragment.class.getCanonicalName());
+                fragment.onReceive(intent);
+            }
+        }
+    };
+
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        this.registerReceiver(this.receiver, filter);
+    }
+
+    public void onPause() {
+        super.onPause();
+        this.unregisterReceiver(this.receiver);
+    }
+
 
     @Override
     public void onFragmentInteraction() {

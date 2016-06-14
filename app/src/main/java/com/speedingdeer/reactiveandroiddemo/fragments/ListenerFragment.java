@@ -1,6 +1,8 @@
 package com.speedingdeer.reactiveandroiddemo.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.Button;
 
 import com.speedingdeer.reactiveandroiddemo.R;
 import com.speedingdeer.reactiveandroiddemo.ReactiveAndroidDemo;
+import com.speedingdeer.reactiveandroiddemo.receivers.Receiver;
 
 public class ListenerFragment extends Fragment {
 
@@ -19,6 +22,8 @@ public class ListenerFragment extends Fragment {
     // ui
     private View mView;
     private Button mButton;
+
+
 
     public ListenerFragment() { } // Required empty public constructor
 
@@ -64,11 +69,10 @@ public class ListenerFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onReceive(Intent intent) {
+        mButton.setEnabled(ReactiveAndroidDemo.getInstance().isNetworkAvailable());
     }
+
 
     public interface OnListenerFragmentInteractionListener {
         void onFragmentInteraction();
